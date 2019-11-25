@@ -5,7 +5,7 @@ const requestUsers = () => {
 };
 
 const requestUsersSuccess = (data) => {
-	return { type: USERS_LIST_SUCCESS, url: data }
+	return { type: USERS_LIST_SUCCESS, data }
 };
 
 const requestUsersError = () => {

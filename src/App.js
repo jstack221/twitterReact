@@ -1,20 +1,17 @@
 import React from 'react';
 import './App.css';
 import Header from './shared/Header';
-import Container from './content/Container';
-
+import Footer from './shared/Footer';
+import Content from './main/Content';
 
 function App() {
   return (
     <div>
       <Header />
-      <Container />
+      <Content />
+      <Footer />
     </div>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   users: state.users
-// }
 
 export default App;

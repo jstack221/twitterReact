@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { fetchUsers } from '../actions';
+import Form from './Form';
 
 class Container extends React.Component {
-
+  
 	componentDidUpdate(){
-		console.log( 'uuuuuuuuuuuuuuu', this.props.users )
+		console.log( 'propspropspropspropsprops', this.props )
 	}
 
 	handleClick = () => {
-		console.log( 'ddddddddddddd', this.props )
 		this.props.getUsers()
 	}
 
@@ -23,9 +23,7 @@ class Container extends React.Component {
 	}
 }
 
-// const mapStateToProps = state => ({ users: state.reducer.users } )
-
-const mapStateToProps = state => ({  } )
+const mapStateToProps = state => ({ users: state.users } )
 
 const mapDispatchToProps = dispatch => (
 	{

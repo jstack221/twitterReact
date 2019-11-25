@@ -7,7 +7,6 @@ const initialState = {
 	users: [],
 };
 export function reducer (state = initialState, action){
-	console.log( 'hit here', action )
 	switch (action.type) {
 		case USERS_LIST_REQUEST:
 			return {
@@ -16,9 +15,9 @@ export function reducer (state = initialState, action){
 				error: false,
 			};
 		case USERS_LIST_SUCCESS:
-			console.log('success')
+			console.log( 'hhhhhhhhhh', action )
 			return {
-				users: action.url,
+				users: action.data.results,
 				loading: false,
 				error: false,
 			};
