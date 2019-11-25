@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { connect } from 'react-redux'
-import { fetchUsers } from '../actions';
+import { fetchUsers, fetchTweets } from '../actions';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -59,8 +59,12 @@ class Form extends React.Component {
 		console.log( 'propspropspropspropsprops', this.props )
 	}
 
-	handleClick = () => {
-    debugger
+	handleSubmit = () => {
+    const { props,state } = this
+    const { getTweets } = props
+    const { userId } = state
+    console.log( 'ssssssssssssssoihfjhfdfhdskhfdskfhdsfhdskf',this.state.userId, typeof ( this.state.userId ) )
+    getTweets( userId )
     // this.state.endDate.format("DD/MM/YYYY")
   }
   
@@ -69,6 +73,7 @@ class Form extends React.Component {
   }
   
   render(){
+    console.log( 'usersssssssssss',this.props.users )
     const { classes } = this.props;
     return (
       <form className={classes.formControl} noValidate autoComplete="off">
@@ -95,7 +100,7 @@ class Form extends React.Component {
           onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
 />
 
-        <Button className={classes.root} onClick={this.handleClick}>SUBMIT</Button>
+        <Button className={classes.root} onClick={this.handleSubmit}>SUBMIT</Button>
         </div>
       </form>
       );
@@ -103,11 +108,12 @@ class Form extends React.Component {
 }
 
 
-const mapStateToProps = state => ({ users: state.users } )
+const mapStateToProps = state => ({ users: state.users, tweets: state.tweets } )
 
 const mapDispatchToProps = dispatch => (
 	{
-		getUsers: () => dispatch( fetchUsers() )
+    getUsers: () => dispatch( fetchUsers() ),
+    getTweets: data => dispatch( fetchTweets( data ) )
 	}
 )
 
