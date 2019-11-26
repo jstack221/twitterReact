@@ -40,67 +40,55 @@ const styles = theme => ({
 });
 
 class Form extends React.Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-       userId: "",
-       stateDate: "",
-       endDate: "",
-       focusedInput: false
-    }
- }
-
+  state = {
+    startDate: '',
+    endDate: ''
+  }
   componentDidMount(){
     this.props.getUsers()
   }
 
-  componentDidUpdate(){
-		console.log( 'propspropspropspropsprops', this.props )
-	}
+  formSubmit = (event) => {  
+    console.log("asdasdasd", this.props.user)
+    this.props.handleSubmit({userId: this.props.userId });
+  }
 
-	handleSubmit = () => {
-    const { props,state } = this
-    const { getTweets } = props
-    const { userId } = state
-    console.log( 'ssssssssssssssoihfjhfdfhdskhfdskfhdsfhdskf',this.state.userId, typeof ( this.state.userId ) )
-    getTweets( userId )
-    // this.state.endDate.format("DD/MM/YYYY")
-  }
-  
   handeUserChange = (event) => {
-    this.setState({userId: event.target.value});
+    this.props.setUserState(event.target.value)
   }
-  
+
   render(){
-    console.log( 'usersssssssssss',this.props.users )
     const { classes } = this.props;
+    console.log("SDSDSDDS", this.props.startDate)
     return (
       <form className={classes.formControl} noValidate autoComplete="off">
         <div>
-        <InputLabel id="demo-simple-select-label">Select User</InputLabel>
-        <Select
-          className={classes.selectField}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          onChange={this.handeUserChange}
-        >
-          {this.props.users.map(user => (
-            <MenuItem key={user.id} value={user.id}>{user.screen_name}</MenuItem>
-          ))}
 
-        </Select>
-        <DateRangePicker
-          startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-          startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-          endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-          endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-          onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-          focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-          onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-/>
+          <InputLabel id="demo-simple-select-label">Select User</InputLabel>
+          <Select
+            className={classes.selectField}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            onChange={this.handeUserChange}
+          >
+            {this.props.users.map(user => (
+              <MenuItem key={user.id} value={user.id}>{user.screen_name}</MenuItem>
+            ))}
+          </Select>
 
-        <Button className={classes.root} onClick={this.handleSubmit}>SUBMIT</Button>
+          <DateRangePicker
+            startDate={this.props.startDate}
+            isOutsideRange={() => false}
+            startDateId="your_unique_start_date_id"
+            endDate={this.props.endDate}
+            endDateId="your_unique_end_date_id"
+            onDatesChange={({ startDate, endDate }) => this.props.handleDateChange({ startDate, endDate })} 
+            focusedInput={this.state.focusedInput}
+            onFocusChange={focusedInput => this.setState({ focusedInput })}
+          />
+
+          <Button className={classes.root} onClick={this.formSubmit}>SUBMIT</Button>
+        
         </div>
       </form>
       );
@@ -117,5 +105,4 @@ const mapDispatchToProps = dispatch => (
 	}
 )
 
-// export default withStyles(styles)(Form);
 export default connect( mapStateToProps, mapDispatchToProps )(withStyles(styles)(Form))

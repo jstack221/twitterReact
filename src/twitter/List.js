@@ -4,10 +4,6 @@ import { fetchUsers } from '../actions';
 
 class Container extends React.Component {
 
-	componentDidUpdate(){
-		console.log( 'propspropspropspropsprops', this.props )
-	}
-
 	handleClick = () => {
 		console.log( 'propspropspropsprops', this.props )
 		this.props.getUsers()

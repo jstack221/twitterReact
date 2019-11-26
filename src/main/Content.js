@@ -7,11 +7,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { fetchTweets } from '../actions';
 import Container from '@material-ui/core/Container';
+import { withStyles } from '@material-ui/core/styles'; 
+import { connect } from 'react-redux'
 import Form from './Form';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ForwardIcon from '@material-ui/icons/Forward';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -37,80 +42,103 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     flexGrow: 1,
   },
+  headColor: {
+    color: '#3f51b5'
+  },
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
-}));
+});
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Content() {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Album layout
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
+class Content extends React.Component {
+  
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+       userId: "",
+       startDate: "",
+       endDate: "",
+       focusedInput: false
+    }
+  }
+
+  handleSubmit = (event) => {
+    console.log("submited", event)
+    const { props,state } = this
+    const { getTweets } = props
+    const { userId } = state
+    var startDate = this.state.startDate && this.state.startDate.format("MM/DD/YYYY")
+    var endDate = this.state.endDate && this.state.endDate.format("MM/DD/YYYY")
+    getTweets( {userId: userId, startDate: startDate, endDate: endDate} )
+    // this.state.endDate.format("DD/MM/YYYY")
+  }
+
+  setUserState = (userId) => {
+    this.setState({userId: userId});
+  }
+  handleDateChange = ({startDate, endDate}) => {
+    this.setState({startDate: startDate, endDate: endDate})
+  }
+
+  render(){
+    const { classes, tweets } = this.props;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <main>
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Form 
+              handleSubmit={this.handleSubmit}
+              setUserState={this.setUserState}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              userId={this.state.userId}
+              handleDateChange={this.handleDateChange}
+            />
+              <Grid container spacing={4}>
+                {tweets && tweets.map(tweet => (
+                  <Grid item key={tweet} xs={12} sm={6} md={4}>
+                    <Card className={classes.card}>
+                      <CardContent className={classes.cardContent}>
+                        <Typography className={classes.headColor} gutterBottom variant="h5" component="h2">
+                          {tweet.text}
+                        </Typography>
+                        <Typography>
+                          Date: {tweet.created_at}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small" color="primary">
+                          <ThumbUpIcon /> {tweet.favorite_count}
+                        </Button>
+                        <Button size="small" color="primary">
+                          <ChatBubbleIcon /> {tweet.reply_count}
+                        </Button>
+                        <Button size="small" color="primary">
+                          <ForwardIcon /> {tweet.retweet_count}
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            </div>
           </Container>
-        </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Form />
-          <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-    </React.Fragment>
-  );
+        </main>
+      </React.Fragment>
+    );
+  }
 }
+
+const mapStateToProps = state => ({ tweets: state.tweets } )
+
+const mapDispatchToProps = dispatch => (
+	{
+    getTweets: data => dispatch( fetchTweets( data ) )
+	}
+)
+
+export default connect( mapStateToProps, mapDispatchToProps )(withStyles(styles)(Content))

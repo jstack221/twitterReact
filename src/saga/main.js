@@ -25,12 +25,9 @@ function* watchListTweets() {
   }
   
   function* watchTweetsAsync(action) {
-    // +id+'tweets'
-    const id = 5431
     try {
-      // console.log("actionactrequestTweetsSuccessionactionaction",action)
       const data = yield call(() => {
-        return fetch( `http://localhost:5000/accounts/${action.data}/tweets` )
+        return fetch( `http://localhost:5000/accounts/${action.data.userId}/tweets?start_date=${action.data.startDate}&end_date=${action.data.endDate}` )
                 .then(res => res.json())
         }
       )
