@@ -127,9 +127,9 @@ class Content extends React.Component {
                     <TableCell component="th" scope="row">
                       {tweet.text}
                     </TableCell>
-                    <TableCell align="right">1</TableCell>
-                    <TableCell align="right">1</TableCell>
-                    <TableCell align="right">1</TableCell>
+                    <TableCell align="right">{tweet.favorite_count}</TableCell>
+                    <TableCell align="right">{tweet.reply_count}</TableCell>
+                    <TableCell align="right">{tweet.retweet_count}</TableCell>
                     <TableCell align="right">
                     <Button onClick={() => { this.showTweet(tweet.id) }} size="small" color="primary">
                       View
@@ -140,7 +140,6 @@ class Content extends React.Component {
               </TableBody>
             </Table>
           </Paper>
-
         </React.Fragment>
       );
     }
