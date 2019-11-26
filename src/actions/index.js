@@ -1,4 +1,6 @@
-import { USERS_LIST_REQUEST, USERS_LIST_SUCCESS, USERS_LIST_ERROR, FETCH_USERS, TWEETS_LIST_SUCCESS, TWEETS_LIST_ERROR, FETCH_TWEETS } from "../actionTypes";
+import { USERS_LIST_REQUEST, USERS_LIST_SUCCESS, USERS_LIST_ERROR, FETCH_USERS, 
+			TWEETS_LIST_SUCCESS, TWEETS_LIST_ERROR, FETCH_TWEETS, 
+			FETCH_TWEET, TWEET_DETAILS_SUCCESS, TWEET_DETAILS_ERROR} from "../actionTypes";
 
 const requestUsers = () => {
 	return { type: USERS_LIST_REQUEST }
@@ -28,6 +30,18 @@ const fetchTweets = ( data ) => {
 	return { type: FETCH_TWEETS, data }
 };
 
+const requestTweetSuccess = (data) => {
+	return { type: TWEET_DETAILS_SUCCESS, data }
+};
+
+const requestTweetError = () => {
+	return { type: TWEET_DETAILS_ERROR }
+};
+
+const fetchTweet = ( data ) => {
+	return { type: FETCH_TWEET, data }
+};
+
 export {
 	requestUsers,
 	requestUsersSuccess,
@@ -35,5 +49,8 @@ export {
 	fetchUsers,
 	requestTweetsSuccess,
 	requestTweetsError,
-	fetchTweets
+	fetchTweets,
+	fetchTweet,
+	requestTweetSuccess,
+	requestTweetError
 }

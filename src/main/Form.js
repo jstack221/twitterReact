@@ -59,7 +59,6 @@ class Form extends React.Component {
 
   render(){
     const { classes } = this.props;
-    console.log("SDSDSDDS", this.props.startDate)
     return (
       <form className={classes.formControl} noValidate autoComplete="off">
         <div>

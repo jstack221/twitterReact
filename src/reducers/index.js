@@ -1,12 +1,14 @@
 import { USERS_LIST_REQUEST, USERS_LIST_SUCCESS, USERS_LIST_ERROR,
-  TWEETS_LIST_SUCCESS, TWEETS_LIST_ERROR, FETCH_TWEETS } from "../actionTypes";
+  TWEETS_LIST_SUCCESS, TWEETS_LIST_ERROR, FETCH_TWEETS, 
+  TWEET_DETAILS_SUCCESS, TWEET_DETAILS_ERROR, FETCH_TWEET	} from "../actionTypes";
 
 const initialState = {
 	url: '',
 	loading: false,
 	error: false,
   users: [],
-  tweets: []
+  tweets: [],
+  tweet: ''
 };
 export function reducer (state = initialState, action){
 	switch (action.type) {
@@ -18,7 +20,6 @@ export function reducer (state = initialState, action){
 				error: false,
 			};
 		case USERS_LIST_SUCCESS:
-			console.log( 'hhhhhhhhhh', action )
 			return {
         ...state,
 				users: action.data.results,
@@ -41,7 +42,6 @@ export function reducer (state = initialState, action){
 				error: false,
 			};
 		case TWEETS_LIST_SUCCESS:
-			console.log( 'bbbbbb', action )
 			return {
         ...state,
 				tweets: action.data.results,
@@ -55,6 +55,28 @@ export function reducer (state = initialState, action){
 				loading: false,
 				error: true,
       };
+
+      case FETCH_TWEET:
+        return {
+          ...state,
+          url: '',
+          loading: true,
+          error: false,
+        };
+      case TWEET_DETAILS_SUCCESS:
+        return {
+          ...state,
+          tweet: action.data,
+          loading: false,
+          error: false,
+        };
+      case TWEET_DETAILS_ERROR:
+        return {
+          ...state,
+          url: '',
+          loading: false,
+          error: true,
+        };
       
 		default:
 			return state;

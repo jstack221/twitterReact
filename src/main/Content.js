@@ -1,23 +1,21 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { fetchTweets } from '../actions';
-import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles'; 
 import { connect } from 'react-redux'
 import Form from './Form';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
-import ForwardIcon from '@material-ui/icons/Forward';
 import Tweet from './Tweet';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
+  table: {
+    minWidth: 650,
+  },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -64,7 +62,7 @@ class Content extends React.Component {
        startDate: "",
        endDate: "",
        focusedInput: false,
-       tweetId: ""
+       tweetId: null
     }
   }
 
@@ -80,6 +78,7 @@ class Content extends React.Component {
   }
 
   showTweet = (tweetId) => {
+    console.log("tweetId", tweetId)
     this.setState({ tweetId: tweetId })
   }
 
@@ -94,51 +93,54 @@ class Content extends React.Component {
     const { classes, tweets } = this.props;
     if(this.state.tweetId){
       return (
-        <Tweet /> 
+        <Tweet 
+          tweetId={this.state.tweetId} 
+          userId={this.state.userId}
+        /> 
       )
     } else{
       return (
         <React.Fragment>
-          <CssBaseline />
-          <main>
-            <Container className={classes.cardGrid} maxWidth="md">
-              <Form 
-                handleSubmit={this.handleSubmit}
-                setUserState={this.setUserState}
-                startDate={this.state.startDate}
-                endDate={this.state.endDate}
-                userId={this.state.userId}
-                handleDateChange={this.handleDateChange}
-              />
-                <Grid container spacing={4}>
-                  {tweets && tweets.map(tweet => (
-                    <Grid conClick={this.showTweet(tweet.id)} item key={tweet.id} xs={12} sm={6} md={4}>
-                      <Card className={classes.card}>
-                        <CardContent className={classes.cardContent}>
-                          <Typography className={classes.headColor} gutterBottom variant="h5" component="h2">
-                            {tweet.text}
-                          </Typography>
-                          <Typography>
-                            Date: {tweet.created_at}
-                          </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button size="small" color="primary">
-                            <ThumbUpIcon /> {tweet.favorite_count}
-                          </Button>
-                          <Button size="small" color="primary">
-                            <ChatBubbleIcon /> {tweet.reply_count}
-                          </Button>
-                          <Button size="small" color="primary">
-                            <ForwardIcon /> {tweet.retweet_count}
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-            </Container>
-          </main>
+          <Form 
+            handleSubmit={this.handleSubmit}
+            setUserState={this.setUserState}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            userId={this.state.userId}
+            handleDateChange={this.handleDateChange}
+          />
+   
+          <Paper className={classes.root}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Tweet</TableCell>
+                  <TableCell align="right">Likes</TableCell>
+                  <TableCell align="right">Replys</TableCell>
+                  <TableCell align="right">Retweets</TableCell>
+                  <TableCell align="right"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tweets.map(tweet => (
+                  <TableRow key={tweet.id}>
+                    <TableCell component="th" scope="row">
+                      {tweet.text}
+                    </TableCell>
+                    <TableCell align="right">1</TableCell>
+                    <TableCell align="right">1</TableCell>
+                    <TableCell align="right">1</TableCell>
+                    <TableCell align="right">
+                    <Button onClick={() => { this.showTweet(tweet.id) }} size="small" color="primary">
+                      View
+                    </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+
         </React.Fragment>
       );
     }
