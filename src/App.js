@@ -15,9 +15,9 @@ function App() {
         <main>
           <Container  maxWidth="md">
             <Content />
-            </Container>
-          </main>
-        </React.Fragment>
+          </Container>
+        </main>
+      </React.Fragment>
       <Footer />
     </div>
   );
