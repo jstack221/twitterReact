@@ -27,15 +27,23 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  selectField: {
-    width: '100px',
-  },
+  // selectField: {
+  //   width: '100px',
+  // },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200,
+  },
+  searchField: {
+    display: 'flex',
+  },
+  searchParent: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
   },
 });
+
 
 const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChange, handleUserChange, formSubmit }) => {
   const [focusedInput, setFocusedInput] = useState();
@@ -43,32 +51,40 @@ const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChan
     <form className={classes.formControl} noValidate autoComplete="off">
       <div>
         <InputLabel id="user-select-label">Select User</InputLabel>
-        <Select
-          className={classes.selectField}
-          labelId="user-select-label"
-          id="user-select"
-          value={selectedUser}
-          displayEmpty
-          onChange={handleUserChange}
-        >
-          <MenuItem value="">Select User</MenuItem>
-          {users.map(user =>
-            <MenuItem key={user.id} value={user.id}>{user.screen_name}</MenuItem>
-          )}
-        </Select>
+        <div className={classes.searchParent}>
+        <div className={classes.searchField}>
+          <Select
+            className={classes.selectField}
+            labelId="user-select-label"
+            id="user-select"
+            value={selectedUser}
+            displayEmpty
+            onChange={handleUserChange}
+          >
+            <MenuItem value="">Select User</MenuItem>
+            {users.map(user =>
+              <MenuItem key={user.id} value={user.id}>{user.screen_name}</MenuItem>
+            )}
+          </Select>
+        </div>
 
-        <DateRangePicker
-          startDate={startDate}
-          isOutsideRange={() => false}
-          startDateId="startDate"
-          endDate={endDate}
-          endDateId="endDate"
-          onDatesChange={handleDateChange} 
-          focusedInput={focusedInput}
-          onFocusChange={focusedInput => setFocusedInput(focusedInput)}
-        />
+        <div className={classes.searchField}>
+          <DateRangePicker
+            startDate={startDate}
+            isOutsideRange={() => false}
+            startDateId="startDate"
+            endDate={endDate}
+            endDateId="endDate"
+            onDatesChange={handleDateChange} 
+            focusedInput={focusedInput}
+            onFocusChange={focusedInput => setFocusedInput(focusedInput)}
+          />
+        </div>
 
-        <Button className={classes.root} onClick={formSubmit}>SUBMIT</Button>
+        <div className={classes.searchField}>
+          <Button className={classes.root} onClick={formSubmit}>SUBMIT</Button>
+        </div>
+        </div>
       </div>
     </form>
   );
