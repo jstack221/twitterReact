@@ -2,7 +2,7 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Routes from './routes';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import './App.css';
 
 function App() {

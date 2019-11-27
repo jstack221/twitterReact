@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { fetchTweets } from '../actions';
 import UserDetailContainer from './UserDetail.container';
-import SearchControl from '../components/SearchControl';
-import TweetList from '../components/TweetList';
+import SearchControl from '../components/SearchControl/SearchControl';
+import TweetList from '../components/TweetList/TweetList';
 
 class TweetContainer extends Component {
   constructor() {

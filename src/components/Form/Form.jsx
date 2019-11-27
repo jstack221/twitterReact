@@ -7,43 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-
-const styles = theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 33,
-    padding: '0 30px',
-    marginLeft: '5px'
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  // selectField: {
-  //   width: '100px',
-  // },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  searchField: {
-    display: 'flex',
-  },
-  searchParent: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-});
-
+import style from './style'
 
 const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChange, handleUserChange, formSubmit }) => {
   const [focusedInput, setFocusedInput] = useState();
@@ -90,4 +54,4 @@ const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChan
   );
 };
 
-export default withStyles(styles, { withTheme: true })(Form);
+export default withStyles(style, { withTheme: true })(Form);

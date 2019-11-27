@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchTweet } from '../actions';
-import Tweet from '../components/Tweet';
+import Tweet from '../components/Tweet/Tweet';
 
 class TweetDetailContainer extends Component {
   componentDidMount() {

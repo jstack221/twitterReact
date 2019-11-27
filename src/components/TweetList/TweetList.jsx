@@ -7,18 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-
-const styles = theme => ({
-  root: {
-    '& > *': {
-      margin: 12,
-      width: 200,
-    },
-  },
-  table: {
-    minWidth: 650,
-  },
-});
+import style from './style'
 
 const TweetList = ({ classes, tweets, showDetails }) => (
   <Paper className={classes.root}>
@@ -53,4 +42,4 @@ const TweetList = ({ classes, tweets, showDetails }) => (
   </Paper>
 );
 
-export default withStyles(styles, { withTheme: true })(TweetList);
+export default withStyles(style, { withTheme: true })(TweetList);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions';
-import UserDetail from '../components/UserDetail';
+import UserDetail from '../components/UserDetail/UserDetail';
 
 class UserDetailContainer extends Component {
   componentDidMount() {

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchUsers, fetchTweets } from '../actions';
-import Form from '../components/Form';
+import Form from '../components/Form/Form';
 
 class FormContainer extends Component {
   constructor() {

@@ -9,15 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-const styles = theme => ({
-  root: {
-    padding: theme.spacing(3, 2),
-  },
-  table: {
-    maxWidth: 400,
-  },
-});
+import style from './style'
 
 const Tweet = ({ classes, tweet, goBack }) => (
   <div>
@@ -57,4 +49,4 @@ const Tweet = ({ classes, tweet, goBack }) => (
   </div>
 );
 
-export default withStyles(styles)(Tweet);
+export default withStyles(style)(Tweet);
