@@ -49,7 +49,7 @@ class Form extends React.Component {
   }
 
   formSubmit = (event) => {  
-    console.log("asdasdasd", this.props.user)
+    this.props.setTextState("")
     this.props.handleSubmit({userId: this.props.userId });
   }
 

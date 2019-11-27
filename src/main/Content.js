@@ -3,6 +3,7 @@ import { fetchTweets } from '../actions';
 import { withStyles } from '@material-ui/core/styles'; 
 import { connect } from 'react-redux'
 import Form from './Form';
+import SearchTweets from './SearchTweets';
 import Tweet from './Tweet';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -62,35 +63,41 @@ class Content extends React.Component {
        startDate: "",
        endDate: "",
        focusedInput: false,
-       tweetId: null
+       tweetId: null,
+       text: ""
     }
   }
 
   handleSubmit = (event) => {
-    console.log("submited", event)
     const { props,state } = this
     const { getTweets } = props
-    const { userId } = state
+    const { userId, text } = state
     var startDate = this.state.startDate && this.state.startDate.format("MM/DD/YYYY")
     var endDate = this.state.endDate && this.state.endDate.format("MM/DD/YYYY")
-    getTweets( {userId: userId, startDate: startDate, endDate: endDate} )
+    console.warn("textssssssss", this.state.text)
+    getTweets( {userId: userId, startDate: startDate, endDate: endDate, text: text} )
     // this.state.endDate.format("DD/MM/YYYY")
   }
 
   showTweet = (tweetId) => {
-    console.log("tweetId", tweetId)
     this.setState({ tweetId: tweetId })
   }
 
   setUserState = (userId) => {
     this.setState({userId: userId});
   }
+
+  setTextState = (text) => {
+    this.setState({text: text})
+  }
+
   handleDateChange = ({startDate, endDate}) => {
     this.setState({startDate: startDate, endDate: endDate})
   }
 
   render(){
     const { classes, tweets } = this.props;
+    console.warn("aaaaaaaaaaaaa", tweets)
     if(this.state.tweetId){
       return (
         <Tweet 
@@ -108,8 +115,15 @@ class Content extends React.Component {
             endDate={this.state.endDate}
             userId={this.state.userId}
             handleDateChange={this.handleDateChange}
+            setTextState={this.setTextState}
           />
-   
+          
+          <SearchTweets 
+            handleSubmit={this.handleSubmit}
+            text={this.state.text}
+            setTextState={this.setTextState} 
+          />
+
           <Paper className={classes.root}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
@@ -122,7 +136,7 @@ class Content extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tweets.map(tweet => (
+                {tweets && tweets.map(tweet => (
                   <TableRow key={tweet.id}>
                     <TableCell component="th" scope="row">
                       {tweet.text}

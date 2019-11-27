@@ -29,7 +29,7 @@ import { call ,put, takeEvery } from 'redux-saga/effects'
   function* watchTweetsAsync(action) {
     try {
       const data = yield call(() => {
-        return fetch( `http://localhost:5000/accounts/${action.data.userId}/tweets?start_date=${action.data.startDate}&end_date=${action.data.endDate}` )
+        return fetch( `http://localhost:5000/accounts/${action.data.userId}/tweets?start_date=${action.data.startDate}&end_date=${action.data.endDate}&text=${action.data.text}` )
                 .then(res => res.json())
         }
       )
