@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-const TweetList = ({ classes, tweets }) => (
+const TweetList = ({ classes, tweets, showDetails }) => (
   <Paper className={classes.root}>
     <Table className={classes.table} aria-label="simple table">
       <TableHead>
@@ -42,7 +42,7 @@ const TweetList = ({ classes, tweets }) => (
             <TableCell align="right">{tweet.reply_count}</TableCell>
             <TableCell align="right">{tweet.retweet_count}</TableCell>
             <TableCell align="right">
-            <Button onClick={() => { this.showTweet(tweet.id) }} size="small" color="primary">
+            <Button onClick={showDetails(tweet.id)} size="small" color="primary">
               View
             </Button>
             </TableCell>

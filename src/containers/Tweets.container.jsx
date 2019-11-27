@@ -13,18 +13,26 @@ class TweetContainer extends Component {
     super();
     this.state = {
       searchText: '',
+      currentRange: {
+        start: null,
+        end: null,
+      }
     }
   }
 
   componentDidMount() {
-    const { tweets, getTweets, match } = this.props;
+    const { tweets, getTweets, match, currentRange } = this.props;
     if (tweets && tweets.length) return;
     getTweets({
       user: match.params.uid,
+      startDate: currentRange.start,
+      endDate: currentRange.end,
     });
   }
 
   goBack = () => this.props.history.push('/');
+
+  goToTweetDetails = (tweetId) => () => this.props.history.push(`tweets/${tweetId}`);
 
   onChange = (ev) => {
     const { value } = ev.target;
@@ -34,11 +42,13 @@ class TweetContainer extends Component {
   }
 
   onSearchSubmit = () => {
-    const { getTweets, match } = this.props;
+    const { getTweets, match, currentRange } = this.props;
     const { searchText } = this.state;
     getTweets({
       user: match.params.uid,
       text: searchText,
+      startDate: currentRange.start,
+      endDate: currentRange.end,
     });
   }
 
@@ -50,7 +60,7 @@ class TweetContainer extends Component {
         onChange={this.onChange}
         tweets={this.props.tweets} 
       />
-      <TweetList tweets={this.props.tweets} />
+      <TweetList tweets={this.props.tweets} showDetails={this.goToTweetDetails} />
     </Fragment>
   );
 
@@ -65,8 +75,8 @@ class TweetContainer extends Component {
     return (
       <Fragment>
         <div>
-          <IconButton aria-label="back">
-            <ArrowBackIcon onClick={this.goBack} />
+          <IconButton onClick={this.goBack} aria-label="back">
+            <ArrowBackIcon />
           </IconButton>
           <UserDetailContainer userId={match.params.uid} />
         </div>
@@ -78,6 +88,7 @@ class TweetContainer extends Component {
 
 const mapStateToProps = ({ tweetReducer }) => ({
   tweets: tweetReducer.tweets,
+  currentRange: tweetReducer.currentRange,
 });
 
 const mapDispatchToProps = dispatch => ({

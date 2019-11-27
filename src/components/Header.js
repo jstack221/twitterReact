@@ -25,7 +25,7 @@ function Header() {
         <Toolbar>
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Tweets 
           </Typography>
         </Toolbar>
       </AppBar>

@@ -1,10 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles'; 
-import { connect } from 'react-redux'
-import { fetchUsers, fetchTweets } from '../actions';
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
 import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
