@@ -1,11 +1,12 @@
 import { fork,all } from 'redux-saga/effects'
-import { watchListUser, watchListTweets, watchTweetDetails, watchUserDetails }  from './main'
+import { userListWatcher, userDetailsWatcher }  from './user'
+import { tweetListWatcher, tweetDetailsWatcher }  from './tweet'
 
 export default function* sagas() {
   yield all ([
-    fork( watchListUser ),
-    fork( watchListTweets ),
-    fork( watchTweetDetails ),
-    fork( watchUserDetails ),
+    fork( userListWatcher ),
+    fork( tweetListWatcher ),
+    fork( tweetDetailsWatcher ),
+    fork( userDetailsWatcher ),
   ])
 }
