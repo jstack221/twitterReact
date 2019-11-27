@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
-import Header from './shared/Header';
-import Footer from './shared/Footer';
-import Content from './main/Content';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Routes from './routes';
+import Header from './shared/Header';
+import './App.css';
 
 function App() {
   return (
@@ -14,11 +13,10 @@ function App() {
         <CssBaseline />
         <main>
           <Container  maxWidth="md">
-            <Content />
+            <Routes />
           </Container>
         </main>
       </React.Fragment>
-      <Footer />
     </div>
   );
 }
