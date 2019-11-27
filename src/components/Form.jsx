@@ -37,7 +37,7 @@ const styles = theme => ({
   },
 });
 
-const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChange, handeUserChange, formSubmit }) => {
+const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChange, handleUserChange, formSubmit }) => {
   const [focusedInput, setFocusedInput] = useState();
   return (
     <form className={classes.formControl} noValidate autoComplete="off">
@@ -49,9 +49,9 @@ const Form = ({ classes, users, selectedUser, startDate, endDate, handleDateChan
           id="user-select"
           value={selectedUser}
           displayEmpty
-          onChange={handeUserChange}
+          onChange={handleUserChange}
         >
-          <MenuItem value="">Select a user</MenuItem>
+          <MenuItem value="">Select User</MenuItem>
           {users.map(user =>
             <MenuItem key={user.id} value={user.id}>{user.screen_name}</MenuItem>
           )}
