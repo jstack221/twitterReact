@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchTweets } from '../actions';
+import { fetchTweets, fetchUser } from '../actions';
 import { withStyles } from '@material-ui/core/styles'; 
 import { connect } from 'react-redux'
 import Form from './Form';
@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import UserDetail from './UserDetail';
 
 const styles = theme => ({
   table: {
@@ -70,12 +71,13 @@ class Content extends React.Component {
 
   handleSubmit = (event) => {
     const { props,state } = this
-    const { getTweets } = props
+    const { getTweets, getUser } = props
     const { userId, text } = state
     var startDate = this.state.startDate && this.state.startDate.format("MM/DD/YYYY")
     var endDate = this.state.endDate && this.state.endDate.format("MM/DD/YYYY")
     console.warn("textssssssss", this.state.text)
     getTweets( {userId: userId, startDate: startDate, endDate: endDate, text: text} )
+    getUser(userId)
     // this.state.endDate.format("DD/MM/YYYY")
   }
 
@@ -97,7 +99,6 @@ class Content extends React.Component {
 
   render(){
     const { classes, tweets } = this.props;
-    console.warn("aaaaaaaaaaaaa", tweets)
     if(this.state.tweetId){
       return (
         <Tweet 
@@ -117,11 +118,14 @@ class Content extends React.Component {
             handleDateChange={this.handleDateChange}
             setTextState={this.setTextState}
           />
-          
+          <UserDetail
+            userId={this.state.userId} 
+          />
           <SearchTweets 
             handleSubmit={this.handleSubmit}
             text={this.state.text}
-            setTextState={this.setTextState} 
+            setTextState={this.setTextState}
+            tweets={this.props.tweets} 
           />
 
           <Paper className={classes.root}>
@@ -164,7 +168,8 @@ const mapStateToProps = state => ({ tweets: state.tweets } )
 
 const mapDispatchToProps = dispatch => (
 	{
-    getTweets: data => dispatch( fetchTweets( data ) )
+    getTweets: data => dispatch( fetchTweets( data ) ),
+    getUser: data => dispatch( fetchUser( data ) )
 	}
 )
 

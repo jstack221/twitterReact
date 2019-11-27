@@ -50,17 +50,19 @@ class SearchTweets extends React.Component {
 
   render(){
     const { classes } = this.props;
-    return (
-      <form className={classes.formControl} noValidate autoComplete="off">
-        <div>
+    // if(this.props.tweets.length > 0){
+      return (
+        <form className={classes.formControl} noValidate autoComplete="off">
+          <div>
 
-        <TextField onChange={this.handletextChange} id="standard-basic" label="Search Tweets" />
+          <TextField onChange={this.handletextChange} id="standard-basic" label="Search Tweets" />
 
-        <Button className={classes.button} onClick={this.formSubmit}>SUBMIT</Button>
-        
-        </div>
-      </form>
-    );
+          <Button className={classes.button} onClick={this.formSubmit}>SUBMIT</Button>
+          
+          </div>
+        </form>
+      );
+    // }
   }
 }
 

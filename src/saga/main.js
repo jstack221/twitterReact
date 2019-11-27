@@ -1,7 +1,8 @@
-import { FETCH_USERS, FETCH_TWEETS, FETCH_TWEET } from "../actionTypes";
+import { FETCH_USER, FETCH_USERS, FETCH_TWEETS, FETCH_TWEET } from "../actionTypes";
 import { requestUsersSuccess, requestUsersError, 
           requestTweetsSuccess,requestTweetsError, 
-          requestTweetSuccess, requestTweetError} from "../actions";
+          requestTweetSuccess, requestTweetError,
+          requestUserSuccess, requestUserError} from "../actions";
 import { call ,put, takeEvery } from 'redux-saga/effects'
 
   function* watchListUser() {
@@ -44,7 +45,6 @@ import { call ,put, takeEvery } from 'redux-saga/effects'
   }
   
   function* watchTweetAsync(action) {
-    console.warn("action", action)
     try {
       const data = yield call(() => {
         return fetch( `http://localhost:5000/accounts/${action.data.userId}/tweets/${action.data.tweetId}` )
@@ -57,11 +57,30 @@ import { call ,put, takeEvery } from 'redux-saga/effects'
     }
   }
 
+  function* watchUserDetails() {
+    yield takeEvery(FETCH_USER, watchUserAsync);
+  }
+  
+  function* watchUserAsync(action) {
+    try {
+      const data = yield call(() => {
+        return fetch( `http://localhost:5000/accounts/${action.data}` )
+                .then(res => res.json())
+        }
+      )
+      console.log("245234234234234234234234234", data)
+      yield put(requestUserSuccess(data));
+    } catch (error) {
+      yield put(requestUserError());
+    }
+  }
+
 
   export {   
     watchListUser,
     watchListTweets,
-    watchTweetDetails
+    watchTweetDetails,
+    watchUserDetails
   }
 
 
